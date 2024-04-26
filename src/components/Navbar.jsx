@@ -1,13 +1,18 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RiMenu3Line } from "react-icons/ri";
 import { ImCross } from "react-icons/im";
 import MobileNav from "./MobileNav";
+import useGetUser from "@/app/helper/useGetUser";
+import handleLogOut from "@/app/helper/userLogOut";
 
 export default function Navbar() {
   const [sideBarOpen, setSideBarOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const userAtStorage = useGetUser();
 
+  // console.log(user);
   const handleSideBar = () => {
     setSideBarOpen(!sideBarOpen);
   };
@@ -34,27 +39,37 @@ export default function Navbar() {
           <div>
             <ImCross
               onClick={handleSideBar}
-              className="text-4xl sm:hidden block cursor-pointer hover:bg-slate-200 hover:p-1 rounded-full transition-all duration-500"
+              className="text-4xl  sm:hidden block cursor-pointer hover:bg-slate-200 hover:p-1 rounded-full transition-all duration-500"
             />
           </div>
         )}
 
         <div className="hidden sm:flex items-center gap-4 ">
-          <Link href="/book">
+          <Link href="/books">
             <p className=" text-lg font-bold text-blue-600 hover:text-blue-800 transition-colors">
               Books
             </p>
           </Link>
-          <Link href="/user">
+          <Link href="/users">
             <p className=" text-lg font-bold text-blue-600 hover:text-blue-800 transition-colors">
-              user
+              Users
             </p>
           </Link>
-          <Link href="/login">
-            <p className=" text-lg font-bold text-blue-600 hover:text-blue-800 transition-colors">
-              Login
-            </p>
-          </Link>
+          {userAtStorage ? (
+            <button onClick={handleLogOut}>
+              <Link href="/">
+                <p className=" text-lg font-bold text-blue-600 hover:text-blue-800 transition-colors">
+                  Logout
+                </p>
+              </Link>
+            </button>
+          ) : (
+            <Link href="/login">
+              <p className=" text-lg font-bold text-blue-600 hover:text-blue-800 transition-colors">
+                Login
+              </p>
+            </Link>
+          )}
         </div>
         <div
           className={`sm:hidden fixed top-16 shadow-lg shadow-slate-300 right-0 h-full bg-gray-100 w-40 z-50 transition-transform duration-1000 transform ${
