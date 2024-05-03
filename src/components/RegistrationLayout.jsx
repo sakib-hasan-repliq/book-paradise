@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 export default function RegistrationLayout({ children }) {
   const pathName = usePathname();
-  //   console.log(pathName);
+
   return (
     <div className="max-w-xl mx-auto my-4 text-xl shadow-lg shadow-slate-500 rounded-lg  font-bold  p-8 text-slate-600 flex gap-2 text-center items-center justify-center">
       <Link
@@ -28,7 +28,7 @@ export default function RegistrationLayout({ children }) {
         }`}
         href="/sign-up"
       >
-        signup
+        Signup
       </Link>
       {children}
     </div>

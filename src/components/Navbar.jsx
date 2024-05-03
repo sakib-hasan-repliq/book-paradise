@@ -6,19 +6,27 @@ import { ImCross } from "react-icons/im";
 import MobileNav from "./MobileNav";
 import useGetUser from "@/app/helper/useGetUser";
 import handleLogOut from "@/app/helper/userLogOut";
-
+import { CiShoppingCart } from "react-icons/ci";
+import { usePathname } from "next/navigation";
 export default function Navbar() {
   const [sideBarOpen, setSideBarOpen] = useState(false);
   const [user, setUser] = useState(null);
   const userAtStorage = useGetUser();
 
+  const pathName = usePathname();
+
   // console.log(user);
   const handleSideBar = () => {
     setSideBarOpen(!sideBarOpen);
   };
+  const cartItems = JSON.parse(localStorage.getItem("book-cart")) || [];
+  const [cartCount, setCartCount] = useState(cartItems.length);
 
+  useEffect(() => {
+    setCartCount(cartItems.length);
+  }, [cartItems, cartCount]);
   return (
-    <div>
+    <div className="w-full">
       <nav
         className={`relative bg-gray-100 py-4 rounded-md px-6 flex items-center justify-between  transition-all duration-1000 `}
       >
@@ -45,12 +53,33 @@ export default function Navbar() {
         )}
 
         <div className="hidden sm:flex items-center gap-4 ">
-          <Link href="/books">
+          <Link
+            className={`relative ${
+              pathName === "/checklist" ? "border-b-2 border-blue-400" : ""
+            }`}
+            href="/checklist"
+          >
+            <CiShoppingCart className="text-4xl  font-extrabold text-blue-600 " />
+            <p className="absolute -top-2 bg-blue-600 text-white px-2 py-1 rounded-full text-xs font-bold left-6">
+              {cartCount}
+            </p>
+          </Link>
+          <Link
+            className={` ${
+              pathName === "/books" ? "border-b-2 border-blue-400" : ""
+            }`}
+            href="/books"
+          >
             <p className=" text-lg font-bold text-blue-600 hover:text-blue-800 transition-colors">
               Books
             </p>
           </Link>
-          <Link href="/users">
+          <Link
+            href="/users"
+            className={` ${
+              pathName === "/users" ? "border-b-2 border-blue-400" : ""
+            }`}
+          >
             <p className=" text-lg font-bold text-blue-600 hover:text-blue-800 transition-colors">
               Users
             </p>
@@ -64,7 +93,12 @@ export default function Navbar() {
               </Link>
             </button>
           ) : (
-            <Link href="/login">
+            <Link
+              className={` ${
+                pathName === "/login" ? "border-b-2 border-blue-400" : ""
+              }`}
+              href="/login"
+            >
               <p className=" text-lg font-bold text-blue-600 hover:text-blue-800 transition-colors">
                 Login
               </p>

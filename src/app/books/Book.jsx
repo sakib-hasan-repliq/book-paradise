@@ -1,16 +1,35 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, Fragment, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-
-export default function Book({ book }) {
+import AOS from "aos";
+import "aos/dist/aos.css";
+import AddToCartForm from "@/components/AddToCartForm";
+export default function Book({ book, handleAddToCart }) {
   const { title, author, price, genre, pages, image_url, isbn } = book;
   if (!title || !author || !price || !genre || !pages || !image_url || !isbn) {
     return <Skeleton count={10} height={300} />;
   }
+  useEffect(() => {
+    AOS.init({});
+  }, []);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
   return (
-    <div className="relative bg-slate-100  w-2/3 mx-auto sm:w-full shadow-2xl p-2 shadow-slate-300 rounded-lg ">
-      <div className="sm:w-full p-2">
+    <div
+      data-aos="fade-up"
+      className=" relative flex flex-col bg-slate-100 p-2 mx-auto w-3/4 sm:w-full shadow-2xl  shadow-slate-300 rounded-lg "
+    >
+      <div className="sm:w-full flex-grow p-2">
         <img
           src={image_url}
           alt="image"
@@ -26,21 +45,57 @@ export default function Book({ book }) {
         </p>
         <p className="ml-12">
           {" "}
-          pages <span className="text-slate-700 font-bold">{pages}</span>
+          Pages <span className="text-slate-700 font-bold">{pages}</span>
         </p>
         <p className="ml-12 my-2 text-teal-800 font-bold text-xl">${price}</p>
         <div className="sm:ml-12 flex items-center justify-between">
-          <button className="bg-white px-2 py-1 rounded-md border-2 border-teal-600  hover:bg-slate-50 font-bold">
+          <button
+            onClick={() => {
+              handleAddToCart(book);
+              openModal();
+            }}
+            className="bg-blue-500 text-white px-2 py-1 rounded-md   hover:bg-blue-600 font-bold"
+          >
             Add to Cart
           </button>
           <Link
-            className=" border-2 rounded-md px-2 py-1 border-blue-600 mr-2 hover:border-blue-500 font-semibold text-slate-600"
+            className="rounded-md bg-green-800 px-2 py-1  mr-2 hover:border-green-500 font-semibold text-slate-50"
             href={`/books/${isbn}`}
           >
             Details
           </Link>
         </div>
       </div>
+      <Transition.Root show={isOpen} as={Fragment}>
+        <Dialog as="div" onClose={setIsOpen}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0 scale-95"
+            enterTo="opacity-100 scale-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100 scale-100"
+            leaveTo="opacity-0 scale-95"
+          >
+            <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-30" />
+          </Transition.Child>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0 scale-95"
+            enterTo="opacity-100 scale-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100 scale-100"
+            leaveTo="opacity-0 scale-95"
+          >
+            <div className="fixed inset-0 flex items-center justify-center">
+              <div className="bg-white p-4 rounded-md">
+                <AddToCartForm closeModal={closeModal} book={book} />
+              </div>
+            </div>
+          </Transition.Child>
+        </Dialog>
+      </Transition.Root>
     </div>
   );
 }

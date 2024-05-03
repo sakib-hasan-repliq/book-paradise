@@ -59,13 +59,13 @@ export default function BookDetails({ params }) {
   }
 
   return (
-    <div className="w-full sm:max-w-6xl   sm:p-4 space-y-4 ">
+    <div className="w-full sm:max-w-6xl  mx-auto my-6    sm:p-4 space-y-4 ">
       <h1 className="text-center font-bold space-y-6 text-slate-600 my-2 text-3xl">
         <span className="text-blue-500 text-4xl my-2">
           {existingBook?.title}
         </span>
       </h1>
-      <div className="w-full sm:max-w-4xl mx-auto  flex flex-col  sm:flex-row gap-6">
+      <div className="w-2/3 sm:w-full mx-auto  flex flex-col  sm:flex-row gap-2">
         <div className="w-full sm:max-w-2xl">
           <img
             src={existingBook?.image_url}
@@ -74,32 +74,32 @@ export default function BookDetails({ params }) {
           />
         </div>
         <div className="w-full sm:max-w-4xl mt-28 mx-auto space-y-12 p-4">
-          <div className="flex justify-between w-full text-xl font-semibold ">
+          <div className="flex justify-between w-full text-xs sm:text-xl   font-semibold ">
             <p className=" text-slate-500">Author</p>
             <p className="">{existingBook?.author}</p>
           </div>
-          <div className="flex justify-between w-full text-xl font-semibold ">
-            <p className=" text-slate-500">genre</p>
+          <div className="flex justify-between w-full text-xs sm:text-xl  font-semibold ">
+            <p className=" text-slate-500">Genre</p>
             <p className="">{existingBook?.genre}</p>
           </div>
-          <div className="flex justify-between w-full text-xl font-semibold ">
-            <p className=" text-slate-500">publisher</p>
-            <p className="">{existingBook?.publisher}</p>
+          <div className="flex  ml-4 sm:ml-0 justify-between w-full text-xs sm:text-xl  font-semibold ">
+            <p className=" text-slate-500">Publisher</p>
+            <p className="text-end w-1/3">{existingBook?.publisher}</p>
           </div>
-          <div className="flex justify-between w-full text-xl font-semibold ">
-            <p className=" text-slate-500">publication date</p>
+          <div className="flex justify-between w-full text-xs sm:text-xl  font-semibold ">
+            <p className=" text-slate-500">Publication Date</p>
             <p className="">{existingBook?.publication_date}</p>
           </div>
-          <div className="flex justify-between w-full text-xl font-semibold ">
-            <p className=" text-slate-500">language</p>
+          <div className="flex justify-between w-full text-xs sm:text-xl  font-semibold ">
+            <p className=" text-slate-500">Language</p>
             <p className="">{existingBook?.language}</p>
           </div>
-          <div className="flex justify-between w-full text-xl font-semibold ">
-            <p className=" text-slate-500">pages</p>
+          <div className="flex justify-between w-full text-xs sm:text-xl  font-semibold ">
+            <p className=" text-slate-500">Pages</p>
             <p className="">{existingBook?.pages}</p>
           </div>
-          <div className="flex justify-between w-full text-xl font-semibold ">
-            <p className=" text-slate-500">price</p>
+          <div className="flex justify-between w-full text-xs sm:text-xl  font-semibold ">
+            <p className=" text-slate-500">Price</p>
             <p className="text-teal-400">${existingBook?.price}</p>
           </div>
         </div>
