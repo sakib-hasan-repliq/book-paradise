@@ -60,6 +60,9 @@ export default function Books() {
 
   let filteredBooks = [];
   // comment a books
+  // if (booksData) {
+
+  // }
   if (booksData) {
     filteredBooks = booksData.filter((book) => {
       const isCategoryMatch =
