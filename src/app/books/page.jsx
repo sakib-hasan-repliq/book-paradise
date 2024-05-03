@@ -76,6 +76,7 @@ export default function Books() {
       return isCategoryMatch && (!searchText || isSearchTextMatch);
     });
   }
+  // cehcls
 
   let booksDataForShowing = showAll
     ? filteredBooks
